@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>E-E-A-T Score Checker — free on-page trust signal audit</title>
+<meta name="description" content="Free E-E-A-T checker: paste a page's HTML and audit Experience, Expertise, Authoritativeness and Trust signals with a score and clear fixes. Runs in your browser.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#111827;--ink:#1f2937;--muted:#56607c;--subtle:#7e87a1;--line:#e3e7f0;--paper:#f6f7fb;--blue:#4338ca;--violet:#4f46e5;--mag:#0d9488;--ok:#16a34a;--warn:#d97706;--bad:#dc2626;
+--grad:linear-gradient(100deg,#4338ca,#4f46e5 45%,#0d9488);--soft:linear-gradient(120deg,#eef2ff 0%,#f5f7ff 50%,#ecfdf9 100%);
+--serif:'Plus Jakarta Sans',system-ui,sans-serif;--sans:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;--shadow:0 1px 2px rgba(12,26,61,.05),0 14px 36px rgba(12,26,61,.08);--r:18px}
+*{box-sizing:border-box}html,body{margin:0}body{font:16px/1.6 var(--sans);color:var(--ink);background:#fff}
+a{color:var(--blue)}button,input,select,textarea{font:inherit;color:inherit}
+.wrap{width:min(100% - 32px,1180px);margin:0 auto}
+.top{border-bottom:1px solid var(--line);background:#fff;position:sticky;top:0;z-index:10}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;gap:12px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--navy);font-weight:800}
+.brand i{width:30px;height:30px;border-radius:9px;background:var(--grad);display:grid;place-items:center;color:#fff;font-style:normal;font-size:15px}
+.top nav a{color:var(--muted);text-decoration:none;font-weight:600;font-size:15px;margin-left:18px}.top nav a:hover{color:var(--navy)}
+.hero{margin:24px auto 0;padding:40px;background:var(--soft);border:1px solid #e0e7ff;border-radius:28px}
+.hero .ic{width:56px;height:56px;border-radius:17px;background:var(--grad);display:grid;place-items:center;color:#fff;box-shadow:0 10px 24px -8px rgba(79,70,229,.85);margin-bottom:14px}
+.hero .ic svg{width:28px;height:28px}
+h1{font:800 clamp(32px,4vw,46px)/1.08 var(--serif);color:var(--navy);margin:0 0 12px;letter-spacing:-.015em}
+h2{font:800 clamp(24px,2.4vw,32px)/1.15 var(--serif);color:var(--navy);margin:0 0 8px;position:relative;padding-top:18px}
+h2::before{content:"";position:absolute;left:0;top:0;width:44px;height:4px;border-radius:4px;background:linear-gradient(90deg,#4338ca,#4f46e5,#0d9488,#4f46e5,#4338ca);background-size:300% 100%;animation:bar 6s linear infinite}
+@keyframes bar{to{background-position:300% 0}}
+h3{font:700 17px/1.3 var(--sans);color:var(--navy);margin:0 0 6px}
+.lead{font-size:18px;color:var(--muted);max-width:68ch;margin:0 0 16px}
+.trust{display:flex;flex-wrap:wrap;gap:6px 20px;margin:0;padding:0;list-style:none;font-weight:600;color:var(--navy);font-size:15px}
+.trust li::before{content:"✓ ";color:var(--violet);font-weight:800}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:22px}
+.panel{background:#fff;border-radius:24px;padding:22px;box-shadow:0 24px 60px -20px rgba(35,30,90,.22),0 1px 2px rgba(12,26,61,.05)}
+section{margin-top:48px}
+label{display:block;font-weight:700;font-size:14px;color:var(--navy);margin:0 0 6px}
+textarea,input[type=text],input[type=number],input[type=url],select{width:100%;background:#fbfbfe;border:1px solid var(--line);border-radius:12px;padding:11px 13px;outline:0;transition:border-color .2s,box-shadow .2s}
+textarea{min-height:200px;resize:vertical;font:13.5px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace}
+textarea:focus,input:focus,select:focus{border-color:#a5b4fc;box-shadow:0 0 0 4px #4f46e518;background:#fff}
+.btn{display:inline-flex;align-items:center;gap:8px;border:1px solid transparent;border-radius:999px;padding:11px 20px;font-weight:700;cursor:pointer;text-decoration:none;transition:transform .2s,box-shadow .2s;white-space:nowrap}
+.btn:hover{transform:translateY(-2px)}.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.btn-p{background:var(--grad);color:#fff;box-shadow:0 10px 22px -10px rgba(79,70,229,.8)}
+.btn-g{background:#fff;color:var(--navy);border-color:#e0e7ff}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.tabs{display:inline-flex;gap:4px;padding:4px;background:var(--paper);border-radius:999px;flex-wrap:wrap}
+.tabs button{border:0;background:transparent;padding:8px 15px;border-radius:999px;font-weight:700;font-size:14px;color:var(--muted);cursor:pointer}
+.tabs button[aria-selected=true]{background:#fff;color:var(--navy);box-shadow:0 1px 2px rgba(12,26,61,.08),0 4px 12px rgba(12,26,61,.06)}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;font-size:12.5px;font-weight:700;background:#f1f3f9;color:var(--muted)}
+.chip.ok{background:#dcfce7;color:#166534}.chip.warn{background:#fef3c7;color:#92400e}.chip.bad{background:#fee2e2;color:#991b1b}
+.chip.i-info{background:#e0e7ff;color:#3730a3}.chip.i-comm{background:#f3e8ff;color:#6b21a8}.chip.i-trans{background:#fce7f3;color:#9d174d}.chip.i-local{background:#dcfce7;color:#166534}.chip.i-nav{background:#e0f2fe;color:#075985}
+.muted{color:var(--muted)}.small{font-size:14px}
+table{width:100%;border-collapse:collapse;font-size:14.5px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--subtle);cursor:pointer;user-select:none;white-space:nowrap;background:#fff;position:sticky;top:0}
+th.num,td.num{text-align:right;font-variant-numeric:tabular-nums}
+tbody tr:hover{background:#fafaff}
+.tablebox{max-height:560px;overflow:auto;border:1px solid var(--line);border-radius:14px;-webkit-overflow-scrolling:touch}
+.tablebox table{min-width:620px}
+.empty{padding:36px 16px;text-align:center;color:var(--subtle)}
+.drop{border:2px dashed #c7d2fe;border-radius:18px;padding:28px;text-align:center;background:#f8faff;cursor:pointer;transition:background .2s,border-color .2s}
+.drop.on{background:#eef2ff;border-color:var(--violet)}
+.note{display:flex;gap:10px;background:#fffbeb;border:1px solid #fde68a;color:#78350f;border-radius:14px;padding:12px 14px;font-size:14px}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;list-style:none;padding:0;margin:20px 0 0;counter-reset:s}
+.steps li{counter-increment:s}.steps li::before{content:counter(s);width:34px;height:34px;border-radius:50%;background:var(--grad);color:#fff;display:grid;place-items:center;font-weight:700;margin-bottom:10px}
+details{border:1px solid var(--line);border-radius:14px;margin:0 0 10px;padding:0 18px}details summary{cursor:pointer;font-weight:700;color:var(--navy);padding:14px 0}details p{margin:0 0 14px;color:var(--muted)}
+footer{margin-top:64px;border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-size:14px}
+footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.fade{animation:fade .45s cubic-bezier(.2,.7,.2,1) both}@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media (max-width:760px){.hero{padding:24px;border-radius:22px}.steps{grid-template-columns:1fr 1fr}.top nav{display:none}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+.grid2{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:start}
+.score-hero{display:grid;grid-template-columns:200px 1fr;gap:28px;align-items:center}
+.ring{position:relative;width:200px;height:200px}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring .v{position:absolute;inset:0;display:grid;place-items:center;text-align:center}
+.ring b{font:800 52px/1 var(--sans);color:var(--navy);display:block}
+.ring small{color:var(--subtle);font-weight:600}
+.ring circle.arc{transition:stroke-dashoffset 1.2s cubic-bezier(.2,.7,.2,1)}
+.pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.pill{background:var(--paper);border-radius:14px;padding:14px}
+.pill .t{font-weight:800;color:var(--navy);font-size:14px;display:flex;justify-content:space-between;gap:8px;min-width:0}.pill .t span:first-child{overflow:hidden;text-overflow:ellipsis}
+.bar{height:8px;border-radius:8px;background:#e8ebf4;overflow:hidden;margin-top:10px}
+.bar i{display:block;height:100%;width:0;background:var(--grad);border-radius:8px;transition:width 1.1s cubic-bezier(.2,.7,.2,1)}
+.checks{display:grid;gap:10px;margin-top:18px}
+.check{display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:12px;align-items:start;padding:14px 16px;border:1px solid var(--line);border-radius:14px;background:#fff}
+.check .dot{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:800;font-size:14px}
+.check.ok .dot{background:var(--ok)}.check.part .dot{background:var(--warn)}.check.bad .dot{background:var(--bad)}
+.check p{overflow-wrap:anywhere;margin:2px 0 0;color:var(--muted);font-size:14.5px}
+.check .fix{margin-top:6px;font-size:14px;color:var(--ink)}
+.check .fix b{color:var(--violet)}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+#result[hidden]{display:none}
+@media (max-width:420px){.pillars{grid-template-columns:1fr!important}}
+@media (max-width:520px){.check{grid-template-columns:28px minmax(0,1fr);padding:12px}.check .chip{grid-column:2;justify-self:start;order:3}.ring{width:170px;height:170px}.ring b{font-size:44px}.pillars{grid-template-columns:1fr 1fr}}
+@media (max-width:900px){.grid2{grid-template-columns:1fr}.score-hero{grid-template-columns:1fr;justify-items:center;text-align:center}.pillars{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap"><a class="brand" href="#"><i>✓</i>E-E-A-T Score Checker</a><nav><a href="#how">How it works</a><a href="#faq">FAQ</a><a href="https://github.com/harikabehara247" rel="noopener">More tools</a></nav></div></header>
+
+<main class="wrap">
+<div class="hero">
+  <div class="grid2">
+    <div>
+      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></div>
+      <h1>Check a page's E-E-A-T signals in seconds</h1>
+      <p class="lead">Paste the HTML of any article or service page. We audit 20 visible signals of Experience, Expertise, Authoritativeness and Trust, score each pillar and tell you exactly what to fix.</p>
+      <ul class="trust"><li>Free, no sign-up</li><li>Runs in your browser</li><li>Clear fixes, not jargon</li></ul>
+    </div>
+    <div class="panel">
+      <div class="row" style="justify-content:space-between;margin-bottom:10px">
+        <label for="html" style="margin:0">Page HTML <span class="muted small">(Ctrl+U on the page → select all → copy)</span></label>
+        <button class="btn btn-g" id="sample" type="button" style="padding:6px 12px;font-size:13px">Try a sample</button>
+      </div>
+      <textarea id="html" placeholder="&lt;!doctype html&gt; … paste the full page source here"></textarea>
+      <div class="row" style="margin-top:12px;justify-content:space-between">
+        <input type="url" id="pageurl" placeholder="Page URL (optional, helps detect internal vs external links)" style="flex:1;min-width:220px">
+        <button class="btn btn-p" id="run" type="button">Check E-E-A-T</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section id="result" hidden>
+  <h2>Your E-E-A-T report</h2>
+  <div class="card fade">
+    <div class="score-hero">
+      <div class="ring"><svg viewBox="0 0 120 120"><defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#4338ca"/><stop offset=".55" stop-color="#4f46e5"/><stop offset="1" stop-color="#0d9488"/></linearGradient></defs><circle cx="60" cy="60" r="52" fill="none" stroke="#eceff6" stroke-width="12"/><circle class="arc" id="arc" cx="60" cy="60" r="52" fill="none" stroke="url(#g)" stroke-width="12" stroke-linecap="round" stroke-dasharray="326.7" stroke-dashoffset="326.7"/></svg>
+        <div class="v"><div><b id="score">0</b><small id="grade">out of 100</small></div></div></div>
+      <div>
+        <h3 id="verdict"></h3>
+        <p class="muted" id="summary" style="margin-top:0"></p>
+        <div class="pillars" id="pillars"></div>
+      </div>
+    </div>
+  </div>
+  <div class="filters tabs" id="filters" role="tablist">
+    <button type="button" aria-selected="true" data-f="all">All checks</button><button type="button" aria-selected="false" data-f="bad">To fix</button><button type="button" aria-selected="false" data-f="part">Partial</button><button type="button" aria-selected="false" data-f="ok">Passed</button>
+  </div>
+  <div class="checks" id="checks"></div>
+  <div class="row" style="margin-top:16px"><button class="btn btn-g" id="copy" type="button">Copy report as text</button></div>
+</section>
+
+<section id="how">
+  <h2>How it works</h2>
+  <ol class="steps">
+    <li><h3>Copy the source</h3><p class="muted">Open your page, press Ctrl+U (⌘⌥U on Mac), select all and copy.</p></li>
+    <li><h3>Paste and check</h3><p class="muted">The HTML is parsed locally. Nothing is uploaded anywhere.</p></li>
+    <li><h3>Read the pillars</h3><p class="muted">Each of the four pillars gets its own score from the signals found.</p></li>
+    <li><h3>Fix the gaps</h3><p class="muted">Start with the red items. Most take minutes in your CMS.</p></li>
+  </ol>
+</section>
+
+<section id="faq">
+  <h2>Frequently asked questions</h2>
+  <details><summary>Is this Google's E-E-A-T score?</summary><p>No. Google does not publish an E-E-A-T score. E-E-A-T comes from Google's Search Quality Rater Guidelines and describes what raters look for. This tool checks the visible, on-page signals that support it — author details, sources, dates, policies and first-hand experience — so you can find gaps quickly.</p></details>
+  <details><summary>Why paste HTML instead of a URL?</summary><p>Browsers block one website from reading another website's pages directly. Pasting the source keeps the tool free, private and server-less. Everything runs on your device.</p></details>
+  <details><summary>Will a higher score improve my rankings?</summary><p>Not by itself. These signals help readers and quality raters trust a page. Rankings depend on many other factors, including how well the content answers the search.</p></details>
+  <details><summary>Which pages should I check first?</summary><p>Pages about money, health, safety or legal topics ("Your Money or Your Life" pages) need the strongest trust signals. Start there, then check your highest-traffic articles.</p></details>
+</section>
+</main>
+
+<footer><div class="wrap"><span>Built by <a href="https://github.com/harikabehara247">Harika Behara</a></span><span>Open source · MIT licence · <a href="https://github.com/harikabehara247">GitHub</a></span></div></footer>
+
+<script>
+(function(){
+"use strict";
+var $=function(s){return document.querySelector(s)};
+var REPUTABLE=/(\.gov(\.[a-z]{2})?|\.gov\.in|\.nic\.in|\.edu(\.[a-z]{2})?|\.ac\.[a-z]{2}|wikipedia\.org|who\.int|un\.org|worldbank\.org|imf\.org|rbi\.org\.in|sebi\.gov\.in|nih\.gov|ncbi\.nlm\.nih\.gov|nature\.com|sciencedirect\.com|springer\.com|reuters\.com|apnews\.com|bbc\.co\.uk|thehindu\.com|developers\.google\.com|support\.google\.com|w3\.org|mozilla\.org|ieee\.org|acm\.org)$/i;
+var EXP=/\b(i|we) (tested|tried|used|bought|visited|measured|reviewed|compared|spent|ran|built|interviewed|found|noticed)\b|\bin my (experience|testing|opinion)\b|\bhands[- ]on\b|\bour (test|testing|review|experience)\b|\bfirst[- ]hand\b|\bafter (\d+|two|three|several) (days|weeks|months|years) of (using|testing)\b/gi;
+
+function txt(n){return (n&&n.textContent||"").replace(/\s+/g," ").trim()}
+function jsonld(doc){var out=[];doc.querySelectorAll('script[type="application/ld+json"]').forEach(function(s){try{var j=JSON.parse(s.textContent);(function walk(o){if(!o||typeof o!=="object")return;if(Array.isArray(o))return o.forEach(walk);out.push(o);if(o["@graph"])walk(o["@graph"]);for(var k in o)if(o[k]&&typeof o[k]==="object")walk(o[k])})(j)}catch(e){}});return out}
+function types(o){var t=o["@type"];return (Array.isArray(t)?t:[t]).filter(Boolean).map(String)}
+
+function analyse(html,pageUrl){
+  var doc=new DOMParser().parseFromString(html,"text/html");
+  var host="";try{host=new URL(pageUrl||doc.querySelector('link[rel=canonical]')&&doc.querySelector('link[rel=canonical]').href||"").hostname.replace(/^www\./,"")}catch(e){}
+  var LD=jsonld(doc);
+  var ldTypes=[].concat.apply([],LD.map(types));
+  var main=doc.querySelector("article")||doc.querySelector("main")||doc.body;
+  var bodyText=txt(main);
+  var words=bodyText?bodyText.split(" ").length:0;
+  var links=[].slice.call(doc.querySelectorAll("a[href]")).map(function(a){var h=a.getAttribute("href")||"",u=null;try{u=new URL(h,pageUrl||"https://example.invalid/")}catch(e){};return{a:a,h:h,u:u,t:txt(a).toLowerCase(),rel:(a.getAttribute("rel")||"").toLowerCase()}});
+  var ext=links.filter(function(l){return l.u&&/^https?:/.test(l.u.protocol)&&l.u.hostname&&l.u.hostname.replace(/^www\./,"")!==host&&l.u.hostname!=="example.invalid"});
+  var hasLink=function(re){return links.some(function(l){return re.test(l.t)||re.test(l.h)})};
+  var R=[];
+  function add(p,id,name,state,detail,fix,w){R.push({p:p,id:id,name:name,s:state,d:detail,fix:fix,w:w||1})}
+
+  /* ---------- EXPERIENCE ---------- */
+  var expHits=(bodyText.match(EXP)||[]);
+  add("Experience","exp-lang","First-hand experience language",expHits.length>=3?"ok":expHits.length?"part":"bad",
+    expHits.length?expHits.length+' phrase(s) found, e.g. "'+expHits.slice(0,2).join('", "')+'".':"No first-hand phrases like “we tested” or “in my experience”.",
+    "Describe what you actually did: how long you used it, what you measured, what surprised you.",2);
+  var imgs=[].slice.call(main.querySelectorAll("img"));
+  var ownImgs=imgs.filter(function(i){var s=i.getAttribute("src")||"";return !/(unsplash|pexels|pixabay|shutterstock|istockphoto|gettyimages|freepik)/i.test(s)});
+  add("Experience","exp-img","Original images or screenshots",ownImgs.length>=3?"ok":ownImgs.length?"part":"bad",
+    imgs.length+" image(s) in the content, "+(imgs.length-ownImgs.length)+" from stock libraries.",
+    "Add your own photos, screenshots or test results. Stock images do not show experience.",1);
+  var specifics=(bodyText.match(/\b\d+(\.\d+)?\s?(%|₹|rs\.?|inr|\$|kg|mb|gb|ms|sec|seconds|minutes|hours|days|km|mah|fps)\b/gi)||[]).length;
+  add("Experience","exp-data","Specific measurements and numbers",specifics>=5?"ok":specifics>=2?"part":"bad",
+    specifics+" concrete measurement(s) found (prices, percentages, timings, sizes).",
+    "Back claims with your own numbers: prices paid, load times, battery hours, results.",1);
+
+  /* ---------- EXPERTISE ---------- */
+  var metaAuthor=doc.querySelector('meta[name=author]');
+  var ldAuthor=LD.filter(function(o){return o.author}).map(function(o){var a=Array.isArray(o.author)?o.author[0]:o.author;return a&&(a.name||a)})[0];
+  var bylineEl=doc.querySelector('[rel=author],.author,.byline,[class*=author-name],[itemprop=author]');
+  var byText=(bodyText.match(/\b(by|written by|author:)\s+([A-Z][a-z]+(\s[A-Z][a-z]+){0,2})/)||[])[2];
+  var authorName=(ldAuthor&&String(ldAuthor))||(metaAuthor&&metaAuthor.content)||(bylineEl&&txt(bylineEl).slice(0,60))||byText||"";
+  add("Expertise","author","Named author byline",authorName?"ok":"bad",authorName?"Author detected: "+authorName+".":"No author name found in the byline, meta tags or schema.",
+    "Show a real person's name near the title, linked to their profile.",2);
+  var authorLink=links.some(function(l){return /\/(author|authors|team|people|profile)s?\//i.test(l.h)||l.rel.indexOf("author")>-1});
+  add("Expertise","author-page","Link to an author profile page",authorLink?"ok":"bad",authorLink?"An author/profile link is present.":"No link to an author or team profile page.",
+    "Link the byline to an author page with their background, experience and other articles.",1);
+  var person=LD.filter(function(o){return types(o).indexOf("Person")>-1});
+  var richPerson=person.some(function(p){return p.sameAs||p.jobTitle||p.description||p.knowsAbout});
+  add("Expertise","person-schema","Author schema with credentials",richPerson?"ok":person.length?"part":"bad",
+    person.length?(richPerson?"Person schema includes sameAs/jobTitle/description.":"Person schema found but without credentials or profiles."):"No Person schema for the author.",
+    "Add Person schema with jobTitle, description and sameAs links to LinkedIn or other profiles.",1);
+  var bio=/\b(years of experience|is a (certified|qualified|senior|licensed)|has (written|worked|covered)|specialises|specializes|holds a|degree in|founder of|editor at)\b/i.test(bodyText);
+  add("Expertise","bio","Author bio with relevant background",bio?"ok":"bad",bio?"A bio describing the author's background was found.":"No author bio describing qualifications or experience.",
+    "Add a short bio at the end: why this person is qualified to write on this topic.",1);
+  add("Expertise","depth","Content depth",words>=1000?"ok":words>=500?"part":"bad",words.toLocaleString("en-IN")+" words in the main content.",
+    "Cover the topic fully: definitions, steps, examples, edge cases and an FAQ. Depth matters more than length.",1);
+  var h2=main.querySelectorAll("h2").length;
+  add("Expertise","structure","Clear structure with subheadings",h2>=4?"ok":h2>=2?"part":"bad",h2+" H2 subheading(s).",
+    "Break the page into clear sections with descriptive H2/H3 headings.",1);
+
+  /* ---------- AUTHORITATIVENESS ---------- */
+  var rep=ext.filter(function(l){return REPUTABLE.test(l.u.hostname)});
+  add("Authoritativeness","citations","Citations to reputable sources",rep.length>=3?"ok":rep.length>=1||ext.length>=3?"part":"bad",
+    rep.length+" link(s) to official, academic or primary sources; "+ext.length+" external link(s) in total.",
+    "Cite primary sources (government, research, official docs) for facts, figures and claims.",2);
+  var org=LD.filter(function(o){return /Organization|NewsMediaOrganization|LocalBusiness/.test(types(o).join(" "))});
+  var orgRich=org.some(function(o){return o.logo&&(o.sameAs||o.url)});
+  add("Authoritativeness","org-schema","Publisher / organisation schema",orgRich?"ok":org.length?"part":"bad",
+    org.length?(orgRich?"Organisation schema with logo and profiles.":"Organisation schema found but missing logo or sameAs."):"No Organisation schema.",
+    "Add Organization schema with name, logo, url and sameAs links to official social profiles.",1);
+  add("Authoritativeness","about","About page linked",hasLink(/\babout( us)?\b|\/about/)?"ok":"bad",hasLink(/\babout( us)?\b|\/about/)?"An About page is linked.":"No visible link to an About page.",
+    "Link an About page that explains who runs the site and why readers can trust it.",1);
+  var internal=links.length-ext.length;
+  add("Authoritativeness","topical","Internal links to related content",internal>=8?"ok":internal>=3?"part":"bad",internal+" internal link(s).",
+    "Link to your other in-depth pages on the topic to show topical coverage.",1);
+
+  /* ---------- TRUST ---------- */
+  var pub=doc.querySelector('meta[property="article:published_time"],time[datetime],[itemprop=datePublished]')||LD.some(function(o){return o.datePublished});
+  var mod=doc.querySelector('meta[property="article:modified_time"],[itemprop=dateModified]')||LD.some(function(o){return o.dateModified})||/\b(updated|last reviewed)\b/i.test(bodyText);
+  add("Trust","dates","Published and updated dates",pub&&mod?"ok":pub||mod?"part":"bad",(pub?"Published date found. ":"No published date. ")+(mod?"Updated date found.":"No updated date."),
+    "Show both dates on the page and in schema (datePublished, dateModified). Update the date only after real edits.",2);
+  add("Trust","contact","Contact details",hasLink(/contact|mailto:|tel:/)?"ok":"bad",hasLink(/contact|mailto:|tel:/)?"A contact link is present.":"No contact link, email or phone found.",
+    "Make it easy to reach you: a contact page, email address or phone number.",1);
+  add("Trust","privacy","Privacy policy and terms",hasLink(/privacy/)&&hasLink(/terms|conditions/)?"ok":hasLink(/privacy|terms/)?"part":"bad",
+    (hasLink(/privacy/)?"Privacy policy linked. ":"No privacy policy link. ")+(hasLink(/terms|conditions/)?"Terms linked.":"No terms link."),
+    "Link a privacy policy and terms of use in the footer.",1);
+  var canon=doc.querySelector("link[rel=canonical]");var https=(canon&&/^https:/.test(canon.href))||/^https:/.test(pageUrl||"");
+  add("Trust","https","Secure (HTTPS) canonical URL",https?"ok":"bad",https?"Canonical URL uses HTTPS.":"No HTTPS canonical URL found.",
+    "Serve the site over HTTPS and add a canonical link tag with the https:// URL.",1);
+  add("Trust","editorial","Editorial or corrections policy",hasLink(/editorial|corrections?|fact[- ]check|review (method|policy)|how we (test|review)/)?"ok":"bad",
+    hasLink(/editorial|corrections?|fact[- ]check|review (method|policy)|how we (test|review)/)?"An editorial / review policy is linked.":"No editorial, review or corrections policy linked.",
+    "Publish how you research, review and correct content, and link it from articles.",1);
+  var aff=ext.filter(function(l){return /amzn\.to|amazon\.[a-z.]+\/.*(tag=|\/dp\/)|flipkart\.com.*affid|\/go\/|\/recommends\//i.test(l.h)||/sponsored|affiliate/.test(l.rel)});
+  var disclosed=/\b(affiliate|commission|sponsored|paid partnership|we may earn)\b/i.test(bodyText);
+  add("Trust","disclosure","Affiliate or sponsorship disclosure",!aff.length?(disclosed?"ok":"ok"):disclosed?"ok":"bad",
+    aff.length?aff.length+" affiliate/sponsored link(s); "+(disclosed?"a disclosure is present.":"no disclosure found."):"No affiliate links detected"+(disclosed?"; a disclosure is shown.":"."),
+    "If you earn from links, say so clearly near the top of the page and mark links rel=\"sponsored\".",aff.length?2:1);
+  var reviewed=/\b(reviewed by|fact[- ]checked by|medically reviewed|edited by|expert reviewed)\b/i.test(bodyText)||LD.some(function(o){return o.reviewedBy});
+  add("Trust","reviewed","Reviewed or fact-checked by someone",reviewed?"ok":"bad",reviewed?"A reviewer / fact-checker is credited.":"No reviewer or fact-checker credited.",
+    "For important topics, have a second expert review the page and credit them.",1);
+
+  /* ---------- score ---------- */
+  var val={ok:1,part:.5,bad:0},P={};
+  R.forEach(function(r){P[r.p]=P[r.p]||{got:0,max:0};P[r.p].got+=val[r.s]*r.w;P[r.p].max+=r.w});
+  var weights={Experience:.25,Expertise:.25,Authoritativeness:.2,Trust:.3},total=0;
+  for(var k in P){P[k].pct=Math.round(P[k].got/P[k].max*100);total+=P[k].pct*weights[k]}
+  return{checks:R,pillars:P,score:Math.round(total),words:words,author:authorName};
+}
+
+var last=null;
+function render(res){
+  last=res;$("#result").hidden=false;
+  var s=res.score;
+  var v=s>=80?["Strong trust signals","Readers and quality raters can quickly see who wrote this, why they are qualified and where the facts come from."]:
+        s>=60?["Good, with clear gaps","The basics are there. Fixing the red items below will make the page noticeably more trustworthy."]:
+        s>=40?["Needs work","Important trust signals are missing. Start with author details, sources and dates."]:
+              ["Weak trust signals","Readers cannot easily tell who is behind this page or why to trust it. Work through the fixes below."];
+  $("#verdict").textContent=v[0];$("#summary").textContent=v[1];
+  var arc=$("#arc");arc.style.strokeDashoffset=326.7;
+  requestAnimationFrame(function(){requestAnimationFrame(function(){arc.style.strokeDashoffset=326.7*(1-s/100)})});
+  var t0=performance.now();(function step(t){var k=Math.min(1,(t-t0)/1100);$("#score").textContent=Math.round(s*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(step)})(t0);
+  $("#grade").textContent=s>=80?"Strong":s>=60?"Good":s>=40?"Needs work":"Weak";
+  $("#pillars").innerHTML=["Experience","Expertise","Authoritativeness","Trust"].map(function(p){var x=res.pillars[p];return '<div class="pill"><div class="t"><span>'+p+'</span><span>'+x.pct+'</span></div><div class="bar"><i data-w="'+x.pct+'"></i></div></div>'}).join("");
+  setTimeout(function(){document.querySelectorAll(".bar i").forEach(function(i){i.style.width=i.getAttribute("data-w")+"%"})},60);
+  drawChecks("all");
+  $("#result").scrollIntoView({behavior:"smooth",block:"start"});
+}
+function esc(t){return String(t).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function drawChecks(f){
+  var order={bad:0,part:1,ok:2};
+  var list=last.checks.slice().sort(function(a,b){return order[a.s]-order[b.s]||b.w-a.w}).filter(function(c){return f==="all"||c.s===f});
+  $("#checks").innerHTML=list.length?list.map(function(c,i){var cls=c.s==="ok"?"ok":c.s==="part"?"part":"bad";var icon=c.s==="ok"?"✓":c.s==="part"?"!":"✕";
+    return '<div class="check '+cls+' fade" style="animation-delay:'+(i*30)+'ms"><span class="dot">'+icon+'</span><div><h3>'+esc(c.name)+'</h3><p>'+esc(c.d)+'</p>'+(c.s!=="ok"?'<div class="fix"><b>Fix:</b> '+esc(c.fix)+'</div>':'')+'</div><span class="chip">'+c.p+'</span></div>'}).join(""):'<div class="empty">Nothing here.</div>';
+}
+$("#filters").addEventListener("click",function(e){var b=e.target.closest("button");if(!b||!last)return;[].forEach.call(this.children,function(x){x.setAttribute("aria-selected",String(x===b))});drawChecks(b.getAttribute("data-f"))});
+$("#run").addEventListener("click",function(){var h=$("#html").value.trim();if(h.length<50){$("#html").focus();$("#html").placeholder="Please paste the page's HTML source first.";return}render(analyse(h,$("#pageurl").value.trim()))});
+$("#copy").addEventListener("click",function(){if(!last)return;var t="E-E-A-T report — score "+last.score+"/100\n"+["Experience","Expertise","Authoritativeness","Trust"].map(function(p){return p+": "+last.pillars[p].pct}).join(" | ")+"\n\n"+last.checks.map(function(c){return(c.s==="ok"?"[PASS] ":c.s==="part"?"[PARTIAL] ":"[FIX] ")+c.name+" — "+c.d+(c.s!=="ok"?"\n   Fix: "+c.fix:"")}).join("\n");
+  navigator.clipboard.writeText(t).then(function(){$("#copy").textContent="Copied ✓";setTimeout(function(){$("#copy").textContent="Copy report as text"},1600)})});
+$("#sample").addEventListener("click",function(){
+  $("#pageurl").value="https://example.com/blog/best-budget-earbuds";
+  $("#html").value='<!doctype html><html><head><title>Best budget earbuds under ₹2,000 (tested)</title><link rel="canonical" href="https://example.com/blog/best-budget-earbuds"><meta name="author" content="Priya Sharma"><meta property="article:published_time" content="2026-09-02"><meta property="article:modified_time" content="2026-10-20">\n<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Best budget earbuds","datePublished":"2026-09-02","dateModified":"2026-10-20","author":{"@type":"Person","name":"Priya Sharma","jobTitle":"Audio reviewer","sameAs":["https://www.linkedin.com/in/example"]},"publisher":{"@type":"Organization","name":"Example Media","logo":{"@type":"ImageObject","url":"https://example.com/logo.png"},"url":"https://example.com"}}<\/script></head>\n<body><header><a href="/about/">About</a> <a href="/contact/">Contact</a></header><article><h1>Best budget earbuds under ₹2,000</h1><p>By <a href="/authors/priya/" rel="author">Priya Sharma</a> · Updated 20 Oct 2026</p><p>We tested 12 pairs for three weeks. In my experience the battery claims were off by 20%. We measured 6.5 hours at 50% volume.</p><h2>How we tested</h2><p>We used each pair for 10 hours of calls…</p><img src="/img/test-bench.jpg" alt="Our test bench"><h2>Top picks</h2><p>Price ₹1,799 …</p><h2>What to look for</h2><p>Bluetooth 5.3 and 40 ms latency. Source: <a href="https://www.bis.gov.in/">BIS</a>.</p><h2>FAQ</h2><p>Some links are affiliate links; we may earn a commission. <a href="https://amzn.to/xyz" rel="sponsored">Buy on Amazon</a></p><p>Priya Sharma is a certified audio engineer with 8 years of experience reviewing headphones.</p></article><footer><a href="/privacy-policy/">Privacy</a> <a href="/terms/">Terms</a> <a href="/editorial-policy/">Editorial policy</a></footer></body></html>';
+  $("#run").click();
+});
+})();
+</script>
+</body>
+</html>
